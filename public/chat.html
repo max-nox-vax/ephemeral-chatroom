@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>Ephemeral · Public Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="chat-body">
+  <header class="chat-header">
+    <div class="header-left">
+      <span class="dot-live"></span>
+      <span class="room-name">PUBLIC ROOM</span>
+    </div>
+    <div class="header-right">
+      <span id="me-name" class="me-name"></span>
+      <button id="leave-btn" class="leave-btn" title="Leave room">⏻</button>
+    </div>
+  </header>
+
+  <main id="feed" class="feed" aria-live="polite"></main>
+
+  <div id="sticker-panel" class="sticker-panel" hidden></div>
+
+  <footer class="composer">
+    <button id="sticker-btn" class="icon-btn" title="Stickers">☺</button>
+    <button id="image-btn" class="icon-btn" title="Send image">🖼</button>
+    <button id="video-btn" class="icon-btn" title="Send video">🎬</button>
+    <input id="file-input" type="file" accept="image/*,video/*" hidden />
+    <input id="text-input" class="text-input" type="text" placeholder="Message… (gone in 30s)" maxlength="1000" />
+    <button id="send-btn" class="send-btn" title="Send">➤</button>
+  </footer>
+
+  <div id="toast" class="toast" hidden></div>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>
+</html>
