@@ -77,7 +77,11 @@ function requireAuth(req, res, next) {
   return res.redirect('/');
 }
 
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+// app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+// app.get('/chat.html', requireAuth, (req, res) => res.sendFile(path.join(__dirname, 'public', 'chat.html')));
+
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'wallpaper.html')));
+app.get('/login.html', (req, res) => res.sendFile(path.join(__dirname, 'public', 'login.html')));
 app.get('/chat.html', requireAuth, (req, res) => res.sendFile(path.join(__dirname, 'public', 'chat.html')));
 
 // ---------------------------------------------------------------------

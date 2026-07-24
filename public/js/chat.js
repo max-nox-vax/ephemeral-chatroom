@@ -10,11 +10,24 @@ const meName = document.getElementById('me-name');
 const leaveBtn = document.getElementById('leave-btn');
 const toast = document.getElementById('toast');
 
-const STICKERS = ['🔥','😂','❤️','👍','😮','😢','🎉','👀','💀','🙌','😎','✨','🤝','😭','🥳','👏'];
+const STICKERS = ['😂','❤️','👍','😢','😎','🥳','💋','🙏','😠','🤦'];
 let LIFETIME_MS = 30000;
 let MAX_FILE_MB = 5;
 let myUsername = '';
 const ringTimers = new Map(); // id -> intervalId
+const IDLE_LIMIT_MS = 60 * 1000; // 1 minute
+let idleTimer;
+function resetIdleTimer() {
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(async () => {
+    await fetch('/api/logout', { method: 'POST' });
+    window.location.href = '/';
+  }, IDLE_LIMIT_MS);
+}
+['mousemove', 'keydown', 'touchstart', 'click', 'scroll'].forEach((evt) =>
+  document.addEventListener(evt, resetIdleTimer)
+);
+resetIdleTimer();
 
 // ---------------------------------------------------------------------
 // bootstrap: confirm we're logged in, then open the socket

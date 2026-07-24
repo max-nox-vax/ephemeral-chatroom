@@ -4,7 +4,7 @@
 module.exports = {
   // The code users must type on the login page to enter the chatroom.
   // Override in production by setting the SECRET_CODE environment variable.
-  SECRET_CODE: process.env.SECRET_CODE,
+  SECRET_CODE: process.env.SECRET_CODE || 'letmein',
 
   // How long a message stays visible before it is permanently erased
   // (server memory + every connected screen), in milliseconds.

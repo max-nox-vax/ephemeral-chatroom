@@ -1,7 +1,7 @@
 {
-  "name": "ephemeral-chatroom",
+  "name": "mern-project",
   "version": "1.0.0",
-  "description": "Public chatroom, secret-code login, messages self-destruct 30s after sending, nothing ever touches disk.",
+  "description": "Public, secret-code login, nothing ever touches disk.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
