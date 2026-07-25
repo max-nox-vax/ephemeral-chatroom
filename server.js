@@ -80,9 +80,39 @@ function requireAuth(req, res, next) {
 // app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
 // app.get('/chat.html', requireAuth, (req, res) => res.sendFile(path.join(__dirname, 'public', 'chat.html')));
 
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'wallpaper.html')));
-app.get('/login.html', (req, res) => res.sendFile(path.join(__dirname, 'public', 'login.html')));
-app.get('/chat.html', requireAuth, (req, res) => res.sendFile(path.join(__dirname, 'public', 'chat.html')));
+// app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'wallpaper.html')));
+// app.get('/login.html', (req, res) => res.sendFile(path.join(__dirname, 'public', 'login.html')));
+// app.get('/chat.html', requireAuth, (req, res) => res.sendFile(path.join(__dirname, 'public', 'chat.html')));
+
+//app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'wallpaper.html')));
+
+//app.post('/api/unlock', (req, res) => {
+//  req.session.unlocked = true;
+//  res.json({ ok: true });
+//});
+
+//app.get('/login.html', (req, res) => {
+//  if (!req.session.unlocked) return res.redirect('/');
+//  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+//});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'wallpaper.html'));
+});
+
+app.post('/api/unlock', (req, res) => {
+  req.session.unlocked = true;
+  res.json({ ok: true });
+});
+
+app.get('/login.html', (req, res) => {
+  if (!req.session.unlocked) return res.redirect('/');
+  res.sendFile(path.join(__dirname, 'views', 'login.html'));
+});
+
+app.get('/chat.html', requireAuth, (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'chat.html'));
+});
 
 // ---------------------------------------------------------------------
 // UPLOAD (image / video) — kept purely in RAM (multer memoryStorage),
