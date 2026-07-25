@@ -22,9 +22,11 @@ const sessionMiddleware = session({
   secret: config.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 24 * 60 * 60 * 1000 }, // cookie itself may live 24h, but it only
-                                            // grants a login — no chat content is ever
-                                            // stored in it or on disk.
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+  },
 });
 app.use(sessionMiddleware);
 io.engine.use(sessionMiddleware);
