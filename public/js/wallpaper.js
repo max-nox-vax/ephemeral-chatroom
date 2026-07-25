@@ -14,6 +14,14 @@ document.addEventListener('click', () => {
   lastClickTime = now;
 
   if (clicks >= 5) {
-    window.location.href = '/login.html';
+    fetch('/api/unlock', { method: 'POST', credentials: 'same-origin' })
+      .then((res) => {
+        if (!res.ok) throw new Error('unlock failed: ' + res.status);
+        window.location.href = '/login.html';
+      })
+      .catch((err) => {
+        console.error(err);
+        alert('Something went wrong unlocking the login page — check console.');
+      });
   }
 });
