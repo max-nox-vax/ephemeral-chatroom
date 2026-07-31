@@ -1,6 +1,6 @@
 let clicks = 0;
 let lastClickTime = 0;
-const CLICK_GAP_LIMIT_MS = 400; // max gap allowed between consecutive clicks
+const CLICK_GAP_LIMIT_MS = 1000; // max gap allowed between consecutive clicks
 
 document.addEventListener('click', () => {
   const now = Date.now();
