@@ -79,6 +79,10 @@ function connect() {
     if (e.key === 'Enter') sendText(socket);
   });
 
+  [stickerBtn, imageBtn, videoBtn].forEach((btn) => {
+    btn.addEventListener('mousedown', (e) => e.preventDefault());
+  });
+
   stickerBtn.addEventListener('click', () => {
     stickerPanel.hidden = !stickerPanel.hidden;
   });
@@ -113,6 +117,11 @@ function sendText(socket) {
   if (!val) return;
   socket.emit('chat:send', { type: 'text', content: val });
   textInput.value = '';
+  textInput.focus();
+  requestAnimationFrame(() => {
+    applyViewportHeight();
+    scrollToBottom();
+  });
 }
 
 async function handleFile(socket) {
@@ -237,4 +246,19 @@ function buildRing(id, expiresAt) {
 
 function scrollToBottom() {
   feed.scrollTop = feed.scrollHeight;
+}
+
+function applyViewportHeight() {
+  const vv = window.visualViewport;
+  if (!vv) return;
+  const chatBody = document.querySelector('.chat-body');
+  chatBody.style.height = vv.height + 'px';
+  chatBody.style.transform = `translateY(${vv.offsetTop}px)`;
+  scrollToBottom();
+}
+
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', applyViewportHeight);
+  window.visualViewport.addEventListener('scroll', applyViewportHeight);
+  applyViewportHeight();
 }
