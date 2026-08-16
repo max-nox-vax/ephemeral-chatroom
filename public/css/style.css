@@ -20,7 +20,12 @@
 }
 
 * { box-sizing: border-box; }
-html, body { height: 100%; }
+html, body {
+  height: 100%;
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
 body {
   margin: 0;
   font-family: var(--font-body);
@@ -183,6 +188,8 @@ input { font-family: inherit; }
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+  transition: height 0.1s ease-out;
 }
 
 .chat-header {
@@ -234,12 +241,25 @@ input { font-family: inherit; }
   gap: 10px;
   align-items: flex-end;
   max-width: 82%;
+  width: fit-content;
+  align-self: flex-start;   /* other users' messages sit on the left */
   animation: rise 0.18s ease-out;
+}
+
+.msg.mine {
+  align-self: flex-end;     /* your own messages sit on the right */
+  flex-direction: row-reverse;  /* flips ring + bubble order to match */
+}
+
+.msg.mine .msg-meta {
+  text-align: right;
 }
 @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
 .msg.system {
   max-width: 100%;
+  width: 100%;
+  align-self: stretch;
   justify-content: center;
   font-family: var(--font-mono);
   font-size: 11px;
@@ -304,6 +324,10 @@ input { font-family: inherit; }
   padding: 10px 12px;
   background: var(--bg-panel);
   border-top: 1px solid var(--line);
+  position: relative;
+  z-index: 5;
+  max-height: 180px;
+  overflow-y: auto;
 }
 .sticker-panel button {
   background: none; border: none; font-size: 26px;
@@ -379,8 +403,31 @@ input { font-family: inherit; }
 @media (max-width: 480px) {
   .login-card { padding: 32px 22px 26px; }
   .login-title { font-size: 26px; }
-  .msg { max-width: 90%; }
-  .sticker-panel { grid-template-columns: repeat(5, 1fr); }
+  .chat-header { padding: 8px 12px; }
+  .room-name { font-size: 10px; }
+  .me-name { font-size: 10px; }
+  .leave-btn { width: 26px; height: 26px; font-size: 12px; }
+  .leave-btn { background-color: white; }
+
+  .msg { max-width: 88%; }
+  .msg-bubble { font-size: 9px; padding: 5px 7px; }
+  .msg-meta { font-size: 9px; }
+  .msg-sticker { font-size: 32px; }
+
+  .sticker-panel {
+    grid-template-columns: repeat(10, 1fr);
+    padding: 3px 6px;
+    gap: 2px;
+  }
+  .sticker-panel button { font-size: 16px; padding: 2px 0; }
+
+  .composer { padding: 5px 6px calc(5px + env(safe-area-inset-bottom)); gap: 5px; }
+  .icon-btn { width: 32px; height: 32px; font-size: 15px; }
+  .send-btn { width: 32px; height: 32px; font-size: 13px; }
+  .text-input { font-size: 13px; padding: 8px 10px; }
+
+  .ring-wrap { width: 18px; height: 18px; }
+  .ring-wrap svg { width: 18px; height: 18px; }
 }
 
 .wallpaper-body {
